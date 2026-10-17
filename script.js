@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* =========================================
@@ -243,7 +242,7 @@ const recipients = {
 ========================================= */
 
 const params = new URLSearchParams(window.location.search);
-const requestedId = params.get("id") || "";
+const requestedId = (params.get("id") || "").trim();
 const recipient = recipients[requestedId] || null;
 
 const recipientPreview = document.getElementById("recipient-preview");
@@ -266,7 +265,8 @@ let isOpened = false;
 let secretOpened = false;
 let typingTimer = null;
 let toastTimer = null;
-let motionReduced = window.matchMedia(
+
+const motionReduced = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 ).matches;
 
@@ -277,12 +277,12 @@ let motionReduced = window.matchMedia(
 
 function initializeCard() {
   if (recipient) {
-    recipientPreview.textContent = recipient.name;
-    letterName.textContent = recipient.name;
+    recipientPreview.textContent = recipient.name.trim();
+    letterName.textContent = recipient.name.trim();
     letterBody.textContent = "";
     secretText.textContent = recipient.secret;
 
-    document.title = "Gửi " + recipient.name + " ♡";
+    document.title = "Gửi " + recipient.name.trim() + " ♡";
   } else {
     recipientPreview.textContent = "Một người thật đặc biệt";
     letterName.textContent = "cậu";
@@ -299,6 +299,9 @@ function initializeCard() {
     }
   }
 
+  // Đảm bảo thông điệp bí mật được ẩn lúc mới vào trang.
+  secretMessage.classList.add("hidden");
+
   createPetals();
   createSparkles();
 }
@@ -310,14 +313,14 @@ function initializeCard() {
 
 function createPetals() {
   const layer = document.getElementById("petal-layer");
+  if (!layer) return;
+
   layer.replaceChildren();
 
   if (motionReduced) return;
 
-  // Giảm số lượng trên màn hình nhỏ để giữ độ mượt.
   const mobile = window.matchMedia("(max-width: 600px)").matches;
   const count = mobile ? 24 : 42;
-
   const fragment = document.createDocumentFragment();
 
   for (let i = 0; i < count; i++) {
@@ -326,10 +329,13 @@ function createPetals() {
 
     petal.style.setProperty("--left", Math.random() * 100 + "%");
     petal.style.setProperty("--size", (7 + Math.random() * 13) + "px");
-    petal.style.setProperty("--opacity", (0.35 + Math.random() * 0.5).toFixed(2));
+    petal.style.setProperty(
+      "--opacity",
+      (0.35 + Math.random() * 0.5).toFixed(2)
+    );
     petal.style.setProperty("--rotation", Math.random() * 360 + "deg");
     petal.style.setProperty("--duration", (10 + Math.random() * 13) + "s");
-    petal.style.setProperty("--delay", (-Math.random() * 20) + "s");
+    petal.style.setProperty("--delay", -Math.random() * 20 + "s");
 
     fragment.appendChild(petal);
   }
@@ -344,6 +350,8 @@ function createPetals() {
 
 function createSparkles() {
   const layer = document.getElementById("sparkle-layer");
+  if (!layer) return;
+
   layer.replaceChildren();
 
   if (motionReduced) return;
@@ -360,7 +368,7 @@ function createSparkles() {
     sparkle.style.setProperty("--top", Math.random() * 100 + "%");
     sparkle.style.setProperty("--size", (2 + Math.random() * 3) + "px");
     sparkle.style.setProperty("--duration", (1.5 + Math.random() * 3) + "s");
-    sparkle.style.setProperty("--delay", (-Math.random() * 4) + "s");
+    sparkle.style.setProperty("--delay", -Math.random() * 4 + "s");
 
     fragment.appendChild(sparkle);
   }
@@ -374,6 +382,8 @@ function createSparkles() {
 ========================================= */
 
 function showToast(message) {
+  if (!toast) return;
+
   toast.textContent = message;
   toast.classList.add("show");
 
@@ -391,6 +401,9 @@ function showToast(message) {
 
 function typeText(element, text, speed = 28) {
   clearTimeout(typingTimer);
+
+  if (!element) return;
+
   element.textContent = "";
 
   if (motionReduced) {
@@ -398,14 +411,11 @@ function typeText(element, text, speed = 28) {
     return;
   }
 
+  const characters = Array.from(text);
   let index = 0;
 
   function typeNext() {
-    if (index >= text.length) return;
-
-    // Array.from xử lý tiếng Việt và ký tự Unicode tốt hơn
-    // so với việc truy cập từng vị trí của chuỗi.
-    const characters = Array.from(text);
+    if (index >= characters.length) return;
 
     element.textContent += characters[index];
     index++;
@@ -421,15 +431,16 @@ function typeText(element, text, speed = 28) {
    MỞ PHONG BÌ
 ========================================= */
 
-
 function openLetter() {
-  if (isOpened) {
-    return;
-  }
+  if (isOpened) return;
 
   isOpened = true;
 
   envelopeScene.classList.add("opened");
+
+  // SỬA: Hiện phần lời chúc sau khi mở phong bì.
+  messageSection.classList.remove("hidden");
+
   openButtonText.textContent = "Đã mở thư ♡";
   envelopeHint.textContent = "Một lời chúc nhỏ, dành riêng cho cậu ♡";
 
@@ -448,39 +459,42 @@ function openLetter() {
 }
 
 
-
 /* =========================================
    THÔNG ĐIỆP BÍ MẬT
 ========================================= */
 
 function revealSecret() {
+  if (!isOpened) {
+    showToast("Cậu hãy mở phong bì trước nhé ♡");
+    return;
+  }
+
+  // Nếu đã mở thông điệp, chỉ cuộn tới phần nội dung.
   if (secretOpened) {
     secretMessage.classList.remove("hidden");
+
     secretMessage.scrollIntoView({
       behavior: motionReduced ? "auto" : "smooth",
       block: "center"
     });
+
     return;
   }
 
   secretOpened = true;
+
+  // Hiện khung thông điệp bí mật.
   secretMessage.classList.remove("hidden");
 
   revealSecretButton.innerHTML =
     "<span>♡</span> Thông điệp dành riêng cho cậu <span>♡</span>";
 
-  revealSecretButton.disabled = true;
+  const secret = recipient
+    ? recipient.secret
+    : "Mong những điều tốt đẹp sẽ luôn đồng hành cùng cậu. Chúc cậu có một ngày thật hạnh phúc.";
 
-  if (!motionReduced) {
-    secretText.textContent = "";
-    typeText(secretText, recipient ? recipient.secret : (
-      "Mong những điều tốt đẹp sẽ luôn đồng hành cùng cậu. Chúc cậu có một ngày thật hạnh phúc."
-    ), 35);
-  }
-
-  setTimeout(() => {
-    revealSecretButton.disabled = false;
-  }, 500);
+  // Dùng chung hàm gõ chữ, kể cả khi thiết bị giảm chuyển động.
+  typeText(secretText, secret, 35);
 
   setTimeout(() => {
     secretMessage.scrollIntoView({
@@ -502,6 +516,8 @@ function replayLetter() {
   secretOpened = false;
 
   envelopeScene.classList.remove("opened");
+
+  // Ẩn phần lời chúc và thông điệp bí mật để bắt đầu lại.
   messageSection.classList.add("hidden");
   secretMessage.classList.add("hidden");
 
@@ -512,6 +528,8 @@ function replayLetter() {
     "Một điều dễ thương đang chờ cậu bên trong";
 
   letterBody.textContent = "";
+
+  // Khôi phục nội dung bí mật gốc, chưa hiển thị ra màn hình.
   secretText.textContent = recipient
     ? recipient.secret
     : "Mong những điều tốt đẹp sẽ luôn đồng hành cùng cậu.";
@@ -541,4 +559,3 @@ replayButton.addEventListener("click", replayLetter);
 ========================================= */
 
 initializeCard();
-
