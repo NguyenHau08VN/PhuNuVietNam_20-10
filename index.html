@@ -1,172 +1,110 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#fff0f5">
-  <meta name="description" content="Một tấm thiệp 20/10 đặc biệt, dành riêng cho bạn.">
-  <title>Gửi cậu, một điều thật xinh đẹp ♡</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffe3ee">
+  <title>Thiệp chúc mừng 20/10</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
 </head>
-
 <body>
-  <div class="ambient" aria-hidden="true">
-    <div class="ambient-glow glow-one"></div>
-    <div class="ambient-glow glow-two"></div>
-    <div class="ambient-glow glow-three"></div>
+
+  <!-- Nền mềm mại -->
+  <div class="bg" aria-hidden="true">
+    <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="blob b4"></i>
   </div>
 
-  <div id="petal-layer" aria-hidden="true"></div>
-  <div id="sparkle-layer" aria-hidden="true"></div>
+  <!-- Canvas hoa rơi -->
+  <canvas id="petals" aria-hidden="true"></canvas>
 
-  <header class="topbar">
-    <a class="brand" href="./" aria-label="Trang thiệp 20 tháng 10">
-      <span class="brand-flower">✿</span>
-      <span>petal <b>&</b> poetry</span>
-    </a>
-    <div class="top-date">20 · 10 <span>♡</span></div>
-  </header>
+  <main id="app">
 
-  <main>
-    <section class="hero">
-      <div class="eyebrow">
-        <span class="eyebrow-line"></span>
-        A LITTLE SOMETHING FOR YOU
-        <span class="eyebrow-line"></span>
-      </div>
+    <!-- MÀN 1: PHONG BÌ -->
+    <section id="stage" class="stage">
+      <p class="pre">Một lá thư dành riêng cho</p>
+      <h2 class="env-name" id="envName"></h2>
 
-      <h1>Phụ nữ Việt Nam<span>20/10</span></h1>
-
-      <p class="hero-description">
-        Những điều xinh đẹp này dành tặng cho tập thể C2.
-      </p>
-
-      <div class="recipient-chip">
-        <span class="recipient-sparkle">✧</span>
-        <span id="recipient-preview">Một người thật đặc biệt</span>
-        <span class="recipient-heart">♥</span>
-      </div>
-    </section>
-
-    <section class="letter-section" aria-label="Thiệp chúc mừng">
-      <div class="side-flower side-flower-left" aria-hidden="true">❀</div>
-      <div class="side-flower side-flower-right" aria-hidden="true">❀</div>
-
-      <div class="letter-caption">
-        <span>✧</span> SEALED WITH LOVE <span>✧</span>
-      </div>
-
-      <div class="envelope-scene" id="envelope-scene">
-        <div class="envelope-shadow"></div>
-
-        <div class="envelope-back">
-          <div class="letter-paper" id="letter-paper">
-            <div class="paper-top-ornament">❦</div>
-
-            <p class="paper-date">OCTOBER 20TH · A SPECIAL DAY</p>
-
-            <h2 class="letter-title">
-              Gửi <span id="letter-name">cậu</span>
-              <span class="tiny-heart">♡</span>
-            </h2>
-
-            <div class="paper-divider">
-              <span></span> ✿ <span></span>
-            </div>
-
-            <p class="letter-body" id="letter-body">
-              Chúc cậu có một ngày thật nhiều niềm vui.
-            </p>
-
-            <div class="wish-signature">
-              <span>With love,</span>
-              <strong>20.10 ♡</strong>
-            </div>
-
-            <div class="paper-bottom-ornament">❦</div>
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Chạm để mở thiệp">
+        <div class="env-back"></div>
+        <div class="letter">
+          <div class="letter-in">
+            <span class="l-small">Thân gửi</span>
+            <span class="l-name" id="letterName"></span>
+            <span class="l-line"></span><span class="l-line short"></span>
           </div>
         </div>
-
-        <div class="envelope-front">
-          <div class="envelope-fold-left"></div>
-          <div class="envelope-fold-right"></div>
-          <div class="envelope-fold-bottom"></div>
+        <div class="env-front"></div>
+        <div class="env-flap"></div>
+        <div class="seal">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <radialGradient id="sg" cx="35%" cy="30%" r="80%">
+                <stop offset="0" stop-color="#ffb3cf"/><stop offset="1" stop-color="#e0507f"/>
+              </radialGradient>
+            </defs>
+            <path d="M50 86C16 62 8 42 14 27 20 12 41 11 50 27 59 11 80 12 86 27 92 42 84 62 50 86Z" fill="url(#sg)" stroke="#fff" stroke-width="4"/>
+            <path d="M26 30q4-9 13-7" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".75"/>
+          </svg>
         </div>
-
-        <div class="envelope-flap" id="envelope-flap"></div>
-
-        <div class="wax-seal" id="wax-seal" aria-hidden="true">
-          <span>♡</span>
-        </div>
-
-        <div class="envelope-ribbon" aria-hidden="true"></div>
+        <span class="pulse-ring"></span>
       </div>
 
-      <p class="envelope-hint" id="envelope-hint">
-        Một điều dễ thương đang chờ cậu bên trong
-      </p>
-
-      <button class="primary-button" id="open-letter" type="button">
-        <span class="button-flower">✿</span>
-        <span id="open-button-text">Mở thư của cậu</span>
-        <span class="button-arrow">↗</span>
-      </button>
-
-      <p class="tiny-note">Made with a little love, just for you.</p>
+      <p class="tap">Chạm vào phong bì để mở thiệp</p>
     </section>
 
-    <section class="message-section hidden" id="message-section">
-      <div class="section-kicker">A LITTLE SECRET FOR YOU</div>
+    <!-- MÀN 2: THIỆP -->
+    <section id="cardStage" class="card-stage hidden">
+      <article class="card">
+        <img class="corner c-tl" alt="" aria-hidden="true">
+        <img class="corner c-tr" alt="" aria-hidden="true">
+        <img class="corner c-bl" alt="" aria-hidden="true">
+        <img class="corner c-br" alt="" aria-hidden="true">
 
-      <div class="secret-card">
-        <div class="secret-top-decoration" aria-hidden="true">
-          <span>✧</span><span>❀</span><span>✧</span>
+        <div class="badge">20 · 10</div>
+        <h1 class="title">Chúc mừng ngày<br>Phụ nữ Việt Nam</h1>
+        <p class="to">Gửi <span id="toName"></span></p>
+
+        <div class="chips" aria-hidden="true">
+          <span class="chip c1">xinh đẹp</span>
+          <span class="chip c2">hạnh phúc</span>
+          <span class="chip c3">thật nhiều hoa</span>
         </div>
 
-        <div class="secret-icon" aria-hidden="true">♡</div>
+        <div id="gallery" class="gallery"></div>
 
-        <h2>Một điều nhỏ bé...</h2>
+        <div class="wish-box"><p id="wish" class="wish"></p></div>
 
-        <p class="secret-intro">
-          Ngoài lời chúc phía trên, còn một điều mình muốn gửi riêng cho cậu.
-        </p>
-
-        <button class="secret-button" id="reveal-secret" type="button">
-          <span>✧</span> Mở thông điệp bí mật <span>✧</span>
-        </button>
-
-        <div class="secret-message hidden" id="secret-message">
-          <div class="secret-divider">✿　♡　✿</div>
-          <p id="secret-text"></p>
-          <div class="secret-end">— một lời nhắn dành riêng cho cậu —</div>
+        <div class="note" id="noteBox">
+          <div class="note-title">Nhắc nhỏ dành cho bạn</div>
+          <p id="reminder" class="reminder"></p>
         </div>
-      </div>
 
-      <div class="closing-note">
-        <span class="closing-flower">❀</span>
-        <p>Mong rằng thế giới sẽ luôn dịu dàng với cậu.</p>
-        <span class="closing-small">Chúc cậu 20/10 thật hạnh phúc ♡</span>
-      </div>
+        <div class="challenge hidden" id="challengeBox">
+          <div class="challenge-title">Thử thách nhỏ</div>
+          <p id="challenge" class="challenge-text"></p>
+        </div>
 
-      <button class="replay-button" id="replay-letter" type="button">
-        ↻ Đọc lại tấm thiệp
-      </button>
+        <p id="sign" class="sign"></p>
+        <button id="replay" class="btn" type="button">Xem lại điều bất ngờ</button>
+
+        <div class="stickers" id="stickers" aria-hidden="true"></div>
+      </article>
     </section>
+
+    <!-- Không tìm thấy / danh sách -->
+    <section id="notFound" class="stage hidden">
+      <div class="nf-card">
+        <h2 id="nfTitle">Không tìm thấy thiệp</h2>
+        <p id="nfText"></p>
+        <ul id="nfList"></ul>
+      </div>
+    </section>
+
   </main>
 
-  <footer class="footer">
-    <div class="footer-flourish">❦</div>
-    <p>A little flower for a lovely soul.</p>
-    <span>HAPPY VIETNAMESE WOMEN'S DAY · 20.10</span>
-  </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
 </body>
 </html>
