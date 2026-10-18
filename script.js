@@ -1,10 +1,4 @@
-/* =========================================================
-   DANH SÁCH BẠN – CHỈ CẦN SỬA Ở ĐÂY
-   key = mã dùng sau ?id=   (ví dụ ?id=C214)
-   name     : tên hiển thị
-   wish     : lời chúc (gõ từng chữ)
-   reminder : nhắc nhỏ (để "" nếu muốn dùng nhắc nhỏ mặc định)
-   ========================================================= */
+/* DANH SÁCH BẠN: key = mã sau ?id= | name | wish | reminder ("" = dùng nhắc mặc định) */
 const FRIENDS = {
   C201: {
     name: "Thanh Xuân",
@@ -188,7 +182,7 @@ const FRIENDS = {
   }
 };
 
-/* ===================== CÀI ĐẶT CHUNG ===================== */
+/* CÀI ĐẶT CHUNG */
 const SETTINGS = {
   sender: "",
   defaultReminder: "Nhớ uống đủ nước, ngủ đủ giấc và luôn mỉm cười thật tươi nhé!",
@@ -196,11 +190,10 @@ const SETTINGS = {
   photoExts: ["jpg", "jpeg", "png", "webp"],
   maxPhotos: 8,
 
-  challengeText: "Nếu được thì đăng thiệp này lên story nhé, để các bạn biết các bạn nam C2 vẫn luôn nhớ tới các bạn!",
+  challengeText: "Nếu được thì đăng thiệp này lên story nhé, để người khác biết các bạn nam C2 vẫn luôn nhớ tới các bạn!",
   challengeExclude: ["C227", "C231", "C208", "C216"]
 };
 
-/* ========================================================= */
 (() => {
   'use strict';
 
@@ -209,7 +202,7 @@ const SETTINGS = {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rand = (a, b) => a + Math.random() * (b - a);
 
-  /* ==================== HIỆU ỨNG HOA RƠI (canvas) ==================== */
+  /* HOA RƠI (canvas) */
   const Fx = (() => {
     const canvas = $('#petals');
     const ctx = canvas.getContext('2d');
@@ -219,7 +212,7 @@ const SETTINGS = {
 
     const mk = (s) => { const c = document.createElement('canvas'); c.width = c.height = s; return c; };
 
-    // Cánh hoa đơn
+    // cánh hoa
     function makePetal(c1, c2, s) {
       const cv = mk(s), g = cv.getContext('2d');
       g.translate(s / 2, s / 2);
@@ -236,7 +229,7 @@ const SETTINGS = {
       return cv;
     }
 
-    // Bông hoa nhiều lớp (mẫu đơn / anh đào)
+    // bông hoa nhiều lớp
     function makeBlossom(a, b, c, s, layers) {
       const cv = mk(s), g = cv.getContext('2d');
       g.translate(s / 2, s / 2);
@@ -274,7 +267,7 @@ const SETTINGS = {
       return cv;
     }
 
-    // Ngôi sao lấp lánh
+    // sao lấp lánh
     function makeSpark(col, s) {
       const cv = mk(s), g = cv.getContext('2d'), r = s * .4;
       g.translate(s / 2, s / 2);
@@ -338,6 +331,7 @@ const SETTINGS = {
       }
     }
 
+    // số hoa rơi cùng lúc (giảm số nếu máy yếu)
     function baseCount() { return reduceMotion ? 10 : small() ? 26 : 56; }
 
     function resize() {
@@ -384,7 +378,7 @@ const SETTINGS = {
       }
       ctx.globalAlpha = 1;
 
-      // bù lại số lượng hoa rơi liên tục
+      // bù hoa rơi liên tục
       const need = baseCount() - calm;
       for (let k = 0; k < need && k < 2; k++) spawn(false);
 
@@ -416,7 +410,7 @@ const SETTINGS = {
     };
   })();
 
-  /* ==================== STICKER KAWAII (SVG) ==================== */
+  /* STICKER (SVG) */
   const FACE = `<circle cx="%x1" cy="%y" r="3.2" fill="#6b3a52"/><circle cx="%x2" cy="%y" r="3.2" fill="#6b3a52"/>
     <ellipse cx="%bx1" cy="%by" rx="5" ry="3" fill="#ff8fb1" opacity=".7"/><ellipse cx="%bx2" cy="%by" rx="5" ry="3" fill="#ff8fb1" opacity=".7"/>
     <path d="M%m1 %my q6 7 12 0" stroke="#6b3a52" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
@@ -426,23 +420,23 @@ const SETTINGS = {
     .replace(/%m1/g, ((x1 + x2) / 2) - 6).replace(/%my/g, my);
 
   const STICKERS = [
-    // hoa mặt cười
+    // hoa
     `<svg viewBox="0 0 100 100"><g fill="#ffb3cf"><circle cx="50" cy="20" r="17"/><circle cx="79" cy="41" r="17"/><circle cx="68" cy="75" r="17"/><circle cx="32" cy="75" r="17"/><circle cx="21" cy="41" r="17"/></g><circle cx="50" cy="52" r="26" fill="#ffe08a"/>${face(41, 59, 49, 58, 57)}</svg>`,
-    // tim mặt cười
+    // tim
     `<svg viewBox="0 0 100 100"><path d="M50 88C18 64 8 44 14 28 20 13 41 12 50 28 59 12 80 13 86 28 92 44 82 64 50 88Z" fill="#ff8fb1"/><path d="M26 30q4-8 12-6" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none" opacity=".7"/>${face(38, 62, 46, 55, 54)}</svg>`,
-    // sao mặt cười
+    // sao
     `<svg viewBox="0 0 100 100"><polygon points="50,6 62,35 93,38 69,58 77,89 50,72 23,89 31,58 7,38 38,35" fill="#ffd36e" stroke="#ffd36e" stroke-width="6" stroke-linejoin="round"/>${face(42, 58, 50, 58, 57)}</svg>`,
-    // mây mặt cười
+    // mây
     `<svg viewBox="0 0 100 100"><g fill="#d9c8ff"><circle cx="34" cy="58" r="20"/><circle cx="58" cy="46" r="25"/><circle cx="78" cy="62" r="16"/><rect x="22" y="58" width="64" height="20" rx="10"/></g>${face(44, 66, 58, 66, 66)}</svg>`
   ];
 
-  /* ==================== TIỆN ÍCH ==================== */
+  /* TIỆN ÍCH */
   const params = new URLSearchParams(location.search);
   const rawId = (params.get('id') || '').trim().toUpperCase();
 
   function showSection(id) { $(id).classList.remove('hidden'); }
 
-  // Chuẩn bị chữ: mỗi ký tự 1 span, mỗi từ không bị ngắt dòng -> không lệch chữ
+  // mỗi chữ 1 span, mỗi từ không bị ngắt dòng
   function prepareText(el, text) {
     el.textContent = '';
     const frag = document.createDocumentFragment();
@@ -481,7 +475,7 @@ const SETTINGS = {
     });
   }
 
-  /* ==================== ẢNH: tự dò file, tự căn đều ==================== */
+  /* ẢNH: tự dò file, tự căn đều */
   const probe = (url) => new Promise((res) => {
     const im = new Image();
     im.onload = () => res(url);
@@ -507,8 +501,8 @@ const SETTINGS = {
     g.innerHTML = '';
     const n = photos.length;
 
+    // không có ảnh: khung hoa mặc định
     if (n === 0) {
-      // Không có ảnh -> khung ảnh mặc định theo tông màu chính
       g.dataset.cols = '1';
       const f = document.createElement('figure');
       f.className = 'photo placeholder';
@@ -523,7 +517,7 @@ const SETTINGS = {
       return;
     }
 
-    // 1 ảnh -> 1 cột | 2-4 ảnh -> 2 cột | 5+ ảnh -> 3 cột (điện thoại tự về 2 cột)
+    // 1 ảnh = 1 cột, 2-4 = 2 cột, 5+ = 3 cột (điện thoại tối đa 2)
     g.dataset.cols = n === 1 ? '1' : n <= 4 ? '2' : '3';
     photos.forEach((src, i) => {
       const f = document.createElement('figure');
@@ -537,7 +531,7 @@ const SETTINGS = {
 
   function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; }
 
-  /* ==================== TRANG LỖI / DANH SÁCH ==================== */
+  /* TRANG LỖI / DANH SÁCH (?list) */
   function showNotFound() {
     $('#stage').classList.add('hidden');
     showSection('#notFound');
@@ -558,7 +552,7 @@ const SETTINGS = {
     });
   }
 
-  /* ==================== CHẠY CHÍNH ==================== */
+  /* CHẠY CHÍNH */
   async function main() {
     Fx.init();
 
@@ -575,12 +569,14 @@ const SETTINGS = {
     $('#letterName').textContent = name;
     $('#toName').textContent = name;
 
-    // Tải ảnh ngầm trong lúc người xem còn ở màn phong bì
+    // tải ảnh ngầm khi còn ở màn phong bì
     const photosPromise = findPhotos(rawId);
 
     const wishChars = prepareText($('#wish'), wish);
     const remChars = prepareText($('#reminder'), reminder);
     const noteBox = $('#noteBox'), sign = $('#sign'), gallery = $('#gallery');
+
+    // thử thách: chỉ id C2xx, trừ danh sách loại trừ
     const showChallenge = /^C2\d{2}$/.test(rawId) && !SETTINGS.challengeExclude.includes(rawId);
     const challengeBox = $('#challengeBox');
     let chChars = [];
@@ -592,11 +588,11 @@ const SETTINGS = {
     if (SETTINGS.sender) sign.textContent = SETTINGS.sender;
     else sign.classList.add('hidden');
 
-    // Hoa 4 góc
+    // hoa 4 góc + sticker
     ['c-tl', 'c-tr', 'c-bl', 'c-br'].forEach((c, i) => { document.querySelector('.' + c).src = Fx.blossomURL(i); });
-    // Sticker
     $('#stickers').innerHTML = STICKERS.map((s, i) => `<div class="sticker s${i + 1}">${s}</div>`).join('');
 
+    // chữ hiện lần lượt: lời chúc, nhắc nhỏ, thử thách
     async function playText() {
       const my = ++runId;
       wishChars.concat(remChars, chChars).forEach((c) => c.classList.remove('on'));
@@ -611,7 +607,7 @@ const SETTINGS = {
       sign.classList.add('in');
     }
 
-    // Mở phong bì
+    // mở phong bì
     const env = $('#envelope');
     let opened = false;
     async function openEnvelope() {
@@ -641,6 +637,7 @@ const SETTINGS = {
     env.addEventListener('click', openEnvelope);
     env.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEnvelope(); } });
 
+    // nút xem lại
     $('#replay').addEventListener('click', (e) => {
       const r = e.currentTarget.getBoundingClientRect();
       Fx.burst(r.left + r.width / 2, r.top, 90);
