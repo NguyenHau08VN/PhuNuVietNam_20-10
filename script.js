@@ -581,17 +581,14 @@ const SETTINGS = {
     $('#stickers').innerHTML = STICKERS.map((s, i) => `<div class="sticker s${i + 1}">${s}</div>`).join('');
 
     // chữ hiện lần lượt: lời chúc, nhắc nhỏ, thử thách
+        // chữ hiện lần lượt: lời chúc, rồi nhắc nhỏ
     async function playText() {
       const my = ++runId;
-      wishChars.concat(remChars, chChars).forEach((c) => c.classList.remove('on'));
-      noteBox.classList.remove('in'); challengeBox.classList.remove('in'); sign.classList.remove('in');
+      wishChars.concat(remChars).forEach((c) => c.classList.remove('on'));
+      noteBox.classList.remove('in'); sign.classList.remove('in');
       await typeChars(wishChars, my); if (my !== runId) return;
       noteBox.classList.add('in'); await sleep(450); if (my !== runId) return;
       await typeChars(remChars, my); if (my !== runId) return;
-      if (showChallenge) {
-        challengeBox.classList.add('in'); await sleep(450); if (my !== runId) return;
-        await typeChars(chChars, my); if (my !== runId) return;
-      }
       sign.classList.add('in');
     }
 
