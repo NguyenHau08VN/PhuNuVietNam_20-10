@@ -241,23 +241,6 @@ body{
 .note-title{font-family:var(--font-title);font-size:1.12rem;color:#c0527a;margin-bottom:8px}
 .reminder{font-weight:600;font-size:1rem;line-height:1.8;color:#7a4a2e;text-wrap:pretty}
 
-/* THỬ THÁCH (thẻ tím) */
-.challenge{
-  position:relative;margin:26px auto 18px;padding:24px 18px 18px;border-radius:18px 6px 6px 6px;
-  background:linear-gradient(180deg,#f3ecff,#e6dbff);
-  box-shadow:0 12px 22px rgba(150,120,210,.25);
-  transform:rotate(1.2deg);
-  opacity:0;transition:opacity .8s ease;
-}
-.challenge.in{opacity:1}
-.challenge::before{
-  content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;
-  background:repeating-linear-gradient(-45deg,rgba(201,166,255,.85) 0 8px,rgba(255,255,255,.85) 8px 16px);
-  transform:rotate(-3deg);border-radius:3px;
-}
-.challenge-title{font-family:var(--font-title);font-size:1.12rem;color:#8a5fd0;margin-bottom:8px}
-.challenge-text{font-weight:600;font-size:1rem;line-height:1.8;color:#5b3f8a;text-wrap:pretty}
-
 .sign{margin:16px 0 20px;font-family:var(--font-title);font-size:1.1rem;color:var(--deep);opacity:0;transition:opacity 1s}
 .sign.in{opacity:1}
 

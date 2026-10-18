@@ -165,7 +165,7 @@ const FRIENDS = {
     wish: "Chúc Tường Lan luôn duyên dáng, hạnh phúc và tràn đầy năng lượng. Mong ngày 20/10 của cậu thật đặc biệt và chặng đường phía trước sẽ có nhiều điều đáng mong chờ.",
     reminder: "Mong cậu luôn có thể sống chậm lại khi cần, lắng nghe bản thân và dành thời gian cho những điều khiến trái tim cảm thấy ấm áp."
   },
-  C241: {
+  C242: {
     name: "Phương Dung",
     wish: "Trang thiệp khép lại vần thơ, Nhưng lời chúc đẹp vẫn chờ mỗi ngày. Chúc Phương Dung hạnh phúc đong đầy, Hai mươi tháng Mười, vui hoài chẳng quên!",
     reminder: "20/10 vui vẻ nhá, Chúc Dung sẽ thành công trên con đường mình chọn, sẽ giữ mãi được nụ cười tươi hehe."
@@ -188,10 +188,7 @@ const SETTINGS = {
   defaultReminder: "Nhớ uống đủ nước, ngủ đủ giấc và luôn mỉm cười thật tươi nhé!",
   photoDir: "img/",
   photoExts: ["jpg", "jpeg", "png", "webp"],
-  maxPhotos: 8,
-
-  challengeText: "Nếu được thì đăng thiệp này lên story nhé, để người khác biết các bạn nam C2 vẫn luôn nhớ tới các bạn!",
-  challengeExclude: ["C227", "C231", "C208", "C216"]
+  maxPhotos: 8
 };
 
 (() => {
@@ -575,15 +572,6 @@ const SETTINGS = {
     const wishChars = prepareText($('#wish'), wish);
     const remChars = prepareText($('#reminder'), reminder);
     const noteBox = $('#noteBox'), sign = $('#sign'), gallery = $('#gallery');
-
-    // thử thách: chỉ id C2xx, trừ danh sách loại trừ
-    const showChallenge = /^C2\d{2}$/.test(rawId) && !SETTINGS.challengeExclude.includes(rawId);
-    const challengeBox = $('#challengeBox');
-    let chChars = [];
-    if (showChallenge) {
-      challengeBox.classList.remove('hidden');
-      chChars = prepareText($('#challenge'), SETTINGS.challengeText);
-    }
 
     if (SETTINGS.sender) sign.textContent = SETTINGS.sender;
     else sign.classList.add('hidden');
