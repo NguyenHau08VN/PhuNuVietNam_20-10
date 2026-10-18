@@ -186,7 +186,7 @@ const FRIENDS = {
     reminder: "20/10 vui vẻ nhá, chúc Vy giàu sớm , lấy chồng đại gia nhiều nhà nhiều xe."
   },
   CLASS: {
-    name: "Lớp ....",
+    name: "Lớp 10A2",
     wish: "Đừng chỉ tặng những lời chúc tốt đẹp trong ngày 20/10, mà hãy luôn biết yêu thương, tôn trọng và trân trọng những người phụ nữ quanh ta mỗi ngày, bởi sự tử tế chính là món quà ý nghĩa nhất.",
     reminder: "Hãy luôn tôn trọng, yêu thương và trân trọng phái đẹp mỗi ngày, không chỉ riêng 20/10!"
   }
