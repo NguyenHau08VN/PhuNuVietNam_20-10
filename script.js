@@ -180,7 +180,7 @@ const FRIENDS = {
     wish: "Chim chuyền cành đón bình minh, May mắn gõ cửa, niềm tin ghé nhà. Chúc Thuỳ Dung chẳng ngại đường xa, Bao nhiêu dự định nở hoa đúng mùa.",
     reminder: "20/10 vui vẻ nhá, mong Dung sẽ luôn giữ mãi nụ cười tươi và gặp nhiều may mắn."
   },
-  TUONGVY: {
+  MYFRIEND: {
     name: "Nguyễn Tường Vy",
     wish: "Trang thiệp khép lại vần thơ, Nhưng lời chúc đẹp vẫn chờ mỗi ngày. Chúc Tường Vy hạnh phúc đong đầy, Hai mươi tháng Mười, vui hoài chẳng quên!",
     reminder: "20/10 vui vẻ nhá, chúc Vy giàu sớm , lấy chồng đại gia nhiều nhà nhiều xe."
